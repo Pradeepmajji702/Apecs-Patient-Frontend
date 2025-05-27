@@ -32,6 +32,8 @@ interface PatientCustomField {
 export class PatientCustomFieldsComponent implements OnInit {
   rows: PatientCustomField[] = [];
   apiData: any[] = [];
+  patients: any[] = [];
+  showPatients = false;
 
   // UI State
   filterFieldName = '';
@@ -99,7 +101,7 @@ export class PatientCustomFieldsComponent implements OnInit {
       revisionId: 1,
       study: { studyId: 'STUDY001' },
       value: '',
-      type: 'STRING',
+      type: 'List',
       idSession: 1,
       editable: false,
       fieldName: '',
@@ -123,7 +125,7 @@ export class PatientCustomFieldsComponent implements OnInit {
           revisionId: 1,
           study: { studyId: 'STUDY001' },
           value: row.values,
-          type: row.fieldType === 'Date' ? 'DATE' : 'STRING',
+          type: row.fieldType === 'Date' ? 'DATE' : 'List',
           idSession: 1
         };
         return this.http.post('http://localhost:8081/api/patient-custom-fields', body).toPromise()
@@ -138,12 +140,12 @@ export class PatientCustomFieldsComponent implements OnInit {
           revisionId: 2, // or track revision
           study: { studyId: 'STUDY001' },
           value: row.values,
-          type: row.fieldType === 'Date' ? 'DATE' : 'STRING',
+          type: row.fieldType === 'Date' ? 'DATE' : 'List',
           idSession: 1
         };
         return this.http.put(`http://localhost:8081/api/patient-custom-fields/${row.patId}`, body).toPromise()
           .catch((err) => {
-            alert('Error updating record: ' + (err?.error?.message || err.message || 'Unknown error'));
+            alert('Error updating record: already mapped to a patient unable to update');
             throw err;
           });
       }
@@ -185,6 +187,7 @@ export class PatientCustomFieldsComponent implements OnInit {
       error: () => {
         this.error = 'Failed to delete row';
         this.cdr.markForCheck();
+        alert('Failed to delete row: already mapped to a patient unable to delete');
       }
     });
   }
@@ -322,5 +325,24 @@ export class PatientCustomFieldsComponent implements OnInit {
 
   selectRow(index: number) {
     this.selectedRowIndex = index;
+  }
+
+  openPatients() {
+    this.http.get<any[]>('http://localhost:8081/api/patients').subscribe({
+      next: (data) => {
+        this.patients = data;
+        this.showPatients = true;
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.patients = [];
+        this.showPatients = true;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  closePatients() {
+    this.showPatients = false;
   }
 }

@@ -74,6 +74,7 @@
     <button class="pcf-btn export" title="Export" (click)="exportToExcel()"><span>⬇️</span></button>
     <button class="pcf-btn history" title="History" (click)="openHistory()"><span>🕑</span></button>
     <button class="pcf-btn refresh" title="Refresh" (click)="refresh()"><span>🔄</span></button>
+    <button class="pcf-btn patients" title="View Patients" (click)="openPatients()"><span>👥</span></button>
   </div>
 
   <div class="pcf-footer">
@@ -109,6 +110,39 @@
         </tbody>
       </table>
       <button (click)="closeHistory()">Close</button>
+    </div>
+  </div>
+
+  <!-- Patients Modal -->
+  <div class="pcf-history-modal" *ngIf="showPatients">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closePatients()">×</button>
+      <h3>Patient Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient ID</th>
+            <th>Patient Name</th>
+            <th>patId</th>
+            <th>Field Name</th>
+            <th>Custom Field Name</th>
+            <th>Custom Field Value</th>
+            <th>Custom Field Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of patients">
+            <td>{{p.patientId}}</td>
+            <td>{{p.patientName}}</td>
+            <td>{{p.patId}}</td>
+            <td>{{p.fieldName}}</td>
+            <td>{{p.patientCustomField?.name}}</td>
+            <td>{{p.patientCustomField?.value}}</td>
+            <td>{{p.patientCustomField?.type}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button (click)="closePatients()">Close</button>
     </div>
   </div>
 </div>
