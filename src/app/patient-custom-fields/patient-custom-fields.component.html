@@ -1,0 +1,114 @@
+<div class="patient-custom-fields-container">
+  <div class="pcf-header">
+    <div class="pcf-logo-title">
+      <img src="/icon_logo.png" alt="ICON Logo" class="icon-logo" />
+      <div class="pcf-study-info">
+        <div>APECS Study Identifier: <span class="study-id">STUDY001</span></div>
+        <div>Protocol No: <span class="protocol-no">BG8-3245-EGFR-001</span></div>
+      </div>
+    </div>
+    <div class="pcf-user-info">
+      <span class="user-name">System Analyst</span> |
+      <a href="#" class="sign-out">Sign Out</a>
+    </div>
+  </div>
+
+  <div class="pcf-tabs">
+    <span class="tab">Visit/Procedure Structure</span>
+    <span class="tab">Patient Status</span>
+    <span class="tab active">Patient Custom Fields</span>
+  </div>
+
+  <div class="pcf-note">
+    <strong>Note:</strong> The Patient Custom Field list of values controls what values can be selected by users in the Patient Module. They do not control what values can be provided by the source systems.
+  </div>
+
+  <div class="pcf-table-section">
+    <div class="pcf-table-filters">
+      <input placeholder="Filter by Field Name" [(ngModel)]="filterFieldName" />
+      <input placeholder="Filter by List of Values" [(ngModel)]="filterValues" />
+    </div>
+    <table class="pcf-table">
+      <thead>
+        <tr>
+          <th>Enable Editing</th>
+          <th (click)="sortBy('fieldName')" style="cursor:pointer;">Field Name <span *ngIf="sortField==='fieldName'">{{sortAsc ? '▲' : '▼'}}</span></th>
+          <th (click)="sortBy('fieldType')" style="cursor:pointer;">Field Type <span *ngIf="sortField==='fieldType'">{{sortAsc ? '▲' : '▼'}}</span></th>
+          <th>List of values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of rows; let i = index" (click)="selectRow(i)" (dblclick)="canWrite && !row.isEditing ? editRow(i) : null" [class.selected-row]="selectedRowIndex === i">
+          <td>
+            <input type="checkbox" [checked]="row.editable" (change)="toggleEditable(i)" [disabled]="!canWrite" />
+          </td>
+          <td *ngIf="!row.isEditing">{{ row.fieldName }}</td>
+          <td *ngIf="row.isEditing">
+            <input [(ngModel)]="row.fieldName" maxlength="100" [ngClass]="{'invalid': validateRow(row)}" />
+            <div class="error" *ngIf="validateRow(row)">{{ validateRow(row) }}</div>
+          </td>
+          <td *ngIf="!row.isEditing">{{ row.fieldType }}</td>
+          <td *ngIf="row.isEditing">
+            <select [(ngModel)]="row.fieldType">
+              <option value="Date">Date</option>
+              <option value="List">List</option>
+            </select>
+          </td>
+          <td *ngIf="!row.isEditing">{{ row.values }}</td>
+          <td *ngIf="row.isEditing">
+            <input [(ngModel)]="row.values" [disabled]="row.fieldType !== 'List'" />
+          </td>
+          <td>
+            <button *ngIf="canWrite && row.isEditing" (click)="saveRows()" [disabled]="!!validateRow(row)">Save</button>
+            <button *ngIf="canWrite && row.isEditing" (click)="cancelEdit()">Cancel</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pcf-actions">
+    <button class="pcf-btn add" title="Add" (click)="addRow()" [disabled]="!canWrite"><span>＋</span></button>
+    <button class="pcf-btn save" title="Save" (click)="saveRows()" [disabled]="!canWrite"><span>💾</span></button>
+    <button class="pcf-btn cancel" title="Delete" (click)="deleteRow()" [disabled]="!canWrite"><span>🗑️</span></button>
+    <button class="pcf-btn export" title="Export" (click)="exportToExcel()"><span>⬇️</span></button>
+    <button class="pcf-btn history" title="History" (click)="openHistory()"><span>🕑</span></button>
+    <button class="pcf-btn refresh" title="Refresh" (click)="refresh()"><span>🔄</span></button>
+  </div>
+
+  <div class="pcf-footer">
+    <div>Last Changed By: <span class="last-changed-by">{{ lastChangedBy }}</span></div>
+    <div>Last Changed Date: <span class="last-changed-date">{{ lastChangedDate }}</span></div>
+  </div>
+
+  <!-- History Modal -->
+  <div class="pcf-history-modal" *ngIf="showHistory">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closeHistory()">×</button>
+      <h3>History for Patient Custom Fields</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Changed Field</th>
+            <th>Old Value</th>
+            <th>New Value</th>
+            <th>Modified By</th>
+            <th>Modified Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let h of history">
+            <td>{{h.action}}</td>
+            <td>{{h.changedField}}</td>
+            <td>{{h.oldValue}}</td>
+            <td>{{h.newValue}}</td>
+            <td>{{h.modifiedBy}}</td>
+            <td>{{h.modifiedTs}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button (click)="closeHistory()">Close</button>
+    </div>
+  </div>
+</div>

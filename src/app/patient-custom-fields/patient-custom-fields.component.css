@@ -1,0 +1,198 @@
+.patient-custom-fields-container {
+  background: #eaf7f5;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  padding: 0;
+}
+
+.pcf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #009999;
+  color: #fff;
+  padding: 16px 32px 8px 32px;
+}
+.icon-logo {
+  height: 40px;
+  margin-right: 16px;
+}
+.pcf-logo-title {
+  display: flex;
+  align-items: center;
+}
+.pcf-study-info {
+  font-size: 14px;
+  line-height: 1.3;
+}
+.pcf-user-info {
+  font-size: 14px;
+  margin-top: 8px;
+}
+.pcf-user-info .sign-out {
+  color: #fff;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+.pcf-tabs {
+  display: flex;
+  background: #d0f0ee;
+  padding: 0 32px;
+  border-bottom: 2px solid #009999;
+}
+.pcf-tabs .tab {
+  padding: 10px 24px;
+  color: #009999;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px 8px 0 0;
+  margin-right: 8px;
+  background: transparent;
+}
+.pcf-tabs .tab.active {
+  background: #fff;
+  border: 2px solid #009999;
+  border-bottom: none;
+  color: #009999;
+}
+
+.pcf-note {
+  background: #fffbe6;
+  color: #666;
+  padding: 12px 32px;
+  font-size: 13px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.pcf-table-section {
+  padding: 24px 32px 0 32px;
+}
+.pcf-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.pcf-table th, .pcf-table td {
+  border: 1px solid #b2dfdb;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+.pcf-table th {
+  background: #d0f0ee;
+  color: #009999;
+  font-weight: bold;
+}
+.pcf-table tr:nth-child(even) {
+  background: #f6fefd;
+}
+
+.pcf-actions {
+  display: flex;
+  gap: 8px;
+  padding: 16px 32px;
+  background: #eaf7f5;
+  border-top: 1px solid #b2dfdb;
+}
+.pcf-btn {
+  background: #fff;
+  border: 1px solid #009999;
+  color: #009999;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.pcf-btn:hover {
+  background: #009999;
+  color: #fff;
+}
+
+.pcf-footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 32px;
+  padding: 12px 32px 24px 32px;
+  font-size: 13px;
+  color: #666;
+}
+.last-changed-by, .last-changed-date {
+  font-weight: bold;
+  color: #009999;
+}
+
+.pcf-history-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pcf-history-modal .modal-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  min-width: 800px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.pcf-history-modal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.pcf-history-modal th, .pcf-history-modal td {
+  border: 1px solid #b2dfdb;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.pcf-history-modal th {
+  background: #d0f0ee;
+  color: #009999;
+  font-weight: bold;
+}
+
+.pcf-history-modal tr:nth-child(even) {
+  background: #f6fefd;
+}
+
+.pcf-history-modal button {
+  margin-top: 16px;
+  padding: 6px 18px;
+  background: #009999;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pcf-history-modal .close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: transparent;
+  color: #009999;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+}
+
+.selected-row {
+  background: #b2dfdb !important;
+}
